@@ -25,12 +25,7 @@ public class Employee : HasId {
     public static void createFullName(string FName, string LName){
         Func<string, string, string> FullName = (string fName, string lName) => fName +" "+lName;
     }
-    public Employee(string FullName, string Department, string Email, string Phone){
-        this.FullName = FullName;
-        this.Department = Department;
-        this.Email = Email;
-        this.Phone = Phone;
-    }
+   
     //create function that allows admin user to add employee
 }
 public class Advent : HasId {
@@ -39,15 +34,8 @@ public class Advent : HasId {
     public string name { get; set; }
     public DateTime startDate { get; set; }
     public DateTime endDate { get; set; }
-    public Advance advance { get; set; }
-    public int AdvanceId { get; set; }
-    public Advent(string name, DateTime startDate, DateTime endDate, Advance advance)
-    {
-        this.name = name;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.advance = advance;
-    } 
+    public IEnumerable<Advance> Advances { get; set; } = new List<Advance>();
+  
     // create function that allows admin user to create new event
 }
 public class Advance : HasId {
@@ -55,34 +43,36 @@ public class Advance : HasId {
     public int Id { get; set; }
     public Advent advent { get; set; }
     public int AdventId { get; set; }
-    public IEnumerable<Category> Categories { get; set; }
+    public IEnumerable<Section> Sections { get; set; }
     public DateTime dueDate { get; set; }
-    public Advance(DateTime dueDate, Advent advent, IEnumerable<Category> Categories){
-        this.dueDate = dueDate;
-        this.advent = advent;
-        this.Categories = Categories;
-    }
+  
     // create function that allows admin user to create new advance
     // create function that allows admin user to issue new advance to employee (and therefore a specific department)
     // create function that allows admin user to approve/deny advance
     // create function that allows employee user to respond to an advance request
+    // create function that allows admin user to create multiple versions of an advance and send certain versions to certain employees (departments)
 
 }
-public class Category : HasId { 
+public class Section : HasId { 
     [Required]
     public int Id { get; set; }
     public int AdvanceId { get; set; }
     public Advance advance { get; set; }
-    public string CategoryName { get; set; }
+    public string SectionName { get; set; }
+    public string SectionDescription { get; set; }
     public string Location { get; set; }
     public double Cost { get; set; }
+    public IEnumerable<Category> Categories { get; set; }
+    // create function that allows admin user to create section and include in a particular advance
+}
+
+public class Category : HasId {
+    [Required]
+    public int Id { get; set; }
+    public string CategoryName { get; set; }
+    public Section section { get; set; }
+    public int SectionId { get; set; }
     public IEnumerable<Option> Options { get; set; }
-    public Category(string CategoryName, double Cost, IEnumerable<Option> Options){
-        this.CategoryName = CategoryName;
-        this.Cost = Cost;
-        this.Options = Options;
-    }
-    // create function that allows admin user to create category and include in a particular advance
 }
 public class Option : HasId {
     [Required]
@@ -101,6 +91,7 @@ public partial class DB : IdentityDbContext<IdentityUser> {
     public DbSet<Employee> Employees { get; set; }
     public DbSet<Advent> Advents { get; set; }
     public DbSet<Advance> Advances { get; set; }
+    public DbSet<Section> Sections { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<Option> Options { get; set; }
 }
@@ -110,6 +101,7 @@ public partial class Handler {
         Repo<Employee>.Register(services, "Employees");
         Repo<Advent>.Register(services, "Advents");
         Repo<Advance>.Register(services, "Advances");
+        Repo<Section>.Register(services, "Sections");
         Repo<Category>.Register(services, "Categories");
         Repo<Option>.Register(services, "Options");
     }

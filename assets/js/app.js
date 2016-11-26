@@ -28,10 +28,9 @@ const post = (url, data) =>
     .catch(e => log(e))
     .then(r => r.json())
 // ----------------
-const Event = (event) =>
-    <a className="event" href={`#/status/${event.id}`}>
-        <h1>{event.name}</h1>
-        <p>{event.location}</p>
+const Advent = (advent) =>
+    <a className="advent" href={`#/status/${advent.id}`}>
+        <h1>{advent.name}</h1>
     </a>
 
 const Error = () => <div>Page Not Found</div>
@@ -44,14 +43,14 @@ class Home extends Component {
         }
     }
     componentDidMount(){
-        get('api/event').then(events => {
-            events = events.reverse()
-            this.setState({items: events})
+        get('api/advent').then(advents => {
+            advents = advents.reverse()
+            this.setState({items: advents})
         }).catch(e => log(e))
     }
     render(){
         return <div className="grid grid-3-600">
-            {this.state.items.map(Event)}
+            {this.state.items.map(Advent)}
         <div>
         <a className="compose-event" href="#/compose">
             <button>Create New Event</button>
@@ -67,7 +66,7 @@ class EventPage extends Component {
         this.state = { id: props.params.id }
     }
     componentDidMount(){
-        get('/api/event/'+this.state.id).then(x => {
+        get('/api/advent/'+this.state.id).then(x => {
             this.setState({ item: x })
         })
     }
@@ -79,13 +78,12 @@ class EventPage extends Component {
         return <div className="event">
             <h5>{item.name}</h5>
             <hr/>
-            <p>{item.location}</p>
             <p>{item.startDate}</p>
             <p>{item.endDate}</p>
             <hr/>
             <div>
                 <a className="build-advance" href="#/build">
-            <button>Build Event Advance</button>
+            <button>Build Event Advance</button> 
         </a>
         </div>
         </div>
@@ -99,9 +97,8 @@ class NewEvent extends Component {
     }
     submit(e){
         e.preventDefault()
-        post('/api/event', {
+        post('/api/advent', {
             name: this.refs.name.value,
-            location: this.refs.location.value,
             startDate: this.refs.startDate.value,
             endDate: this.refs.endDate.value
         }).then(x => {
@@ -125,7 +122,6 @@ class NewEvent extends Component {
 
         <div>
             <textarea ref="name" type="text" placeholder="Event Name" required></textarea>
-            <textarea ref="location" type="text" placeholder="Event Location" required></textarea>
             <textarea ref="startDate" type="DateTime" placeholder="Start Date DD/MM/YR" required></textarea>
             <textarea ref="endDate" type="DateTime" placeholder="End Date DD/MM/YR" required></textarea>
         </div>
@@ -139,12 +135,20 @@ class NewEvent extends Component {
 class NewAdvance extends Component {
     constructor(props){
         super(props)
-        this.state = {}
+        this.state = {
+            items: []
+        }
+    }
+    componentDidMount(){
+        get('/api/advent').then(advent => {
+            advent = adventId()
+            this.setState({items: adventId})
+        }).catch(e => log(e))
     }
     submit(e){
         e.preventDefault()
-        post('/api/advance', {
-            name: this.refs.name.value,
+        post('/api/advance', { //not sure how to associate this advance with the AdventId and the category with the advanceId
+            name: this.refs.name.value, 
             location: this.refs.location.value,
             startDate: this.refs.startDate.value,
             endDate: this.refs.endDate.value
@@ -169,24 +173,20 @@ class NewAdvance extends Component {
 
         <div>
             <p>
-            In order to initialize your event advance, you'll need to provide details for the following categories:
+            In order to initialize your event advance, you'll want to create sections for each part of your advance. Let's get started. 
             </p>
-        <div className="advance-category-button">
-            <button>Employees</button>
-            <button>Departments</button>
-            <button>Credentials</button>
-            <button>Staff Shirts</button>
-            <button>Parking</button>
-            <button>Hotel</button>
-            <button>Petty Cash</button>
-            <button>Radios</button>
-            <button>Golf Carts</button>
-            <button>Catering</button>
-            <button>Advance Details</button>
-        </div>  
-        </div>
         <div>
-                <button type="submit">Initialize Advance</button>
+            <textarea ref="name" type="text" placeholder="Section Name" required></textarea>
+            <textarea ref="sectionDescription" type="text" placeholder="A Brief Description about this section - optional"></textarea>
+            <textarea ref="category" type="text" placeholder="If this section is for Staff Shirts, then your options might include Cost or Sizes" required></textarea>          
+            <button>Add Another Category</button>
+            <textarea ref="option" type="text" placeholder="This is where you would include options within a category, for example, the different shirt sizes available. This is not required"></textarea>
+            <button>Add Another Option</button>
+
+        </div>
+        </div>  
+        <div>
+                <button type="submit">Add Category</button>
             </div>
         </form>
     }
