@@ -42,3 +42,45 @@
 body {
     
 }
+
+.event {
+    padding: 1.5rem;
+    border: 1px solid green;
+    margin: 2rem;
+
+    h1, p {
+        color: green;
+        font-size: medium;
+        text-align: center;
+        padding: auto;
+        margin: auto;
+    }
+}
+
+.compose-event {
+    border: 1px solid green;
+    float: left;
+    color: green;
+    position: center;
+}
+
+.new-event-form {
+     max-width: 600px;
+     margin: 1.5rem auto;
+     input {
+        display: block;
+        padding: .5rem;
+        margin-bottom: 1.5rem;
+        width: 100%;
+    }
+}
+
+.event-form {
+    display: block;
+}
+
+.advance-category-button {
+    display: inline;
+    margin: 40px;
+
+}

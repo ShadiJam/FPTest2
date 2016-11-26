@@ -2,25 +2,63 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
-[Route("/api/card")]
-public class CardController : CRUDController<Card> {
-    public CardController(IRepository<Card> r) : base(r){}
-
-    [HttpGet("search")]
-    public IActionResult Search([FromQuery]string term, int listId = -1){
-        return Ok(r.Read(dbset => dbset.Where(card => 
-            card.Title.ToLower().IndexOf(term.ToLower()) != -1
-            || card.Text.ToLower().IndexOf(term.ToLower()) != -1
-        )));
-    }
+[Route("api/event")]
+public class EventController : CRUDController<Event> {
+    public EventController(IRepository<Event> r) : base(r){}
 }
 
-[Route("/api/cardlist")]
-public class CardListController : CRUDController<CardList> {
-    public CardListController(IRepository<CardList> r) : base(r){}
+[Route("api/employee")]
+public class EmployeeController : CRUDController<Employee> {
+    public EmployeeController(IRepository<Employee> r) : base(r){}
 }
 
-[Route("/api/board")]
-public class BoardController : CRUDController<Board> {
-    public BoardController(IRepository<Board> r) : base(r){}
+[Route("api/location")]
+public class LocationController : CRUDController<Location> {
+    public LocationController(IRepository<Location> r) : base(r){}
+}
+
+[Route("/api/advance")]
+public class AdvanceController : CRUDController<Advance> {
+    public AdvanceController(IRepository<Advance> r) : base(r){}
+}
+
+[Route("/api/credential")]
+public class CredentialController : CRUDController<Credential> {
+    public CredentialController(IRepository<Credential> r) : base(r){}
+}
+
+[Route("/api/shirt")]
+public class ShirtController : CRUDController<Shirt> {
+    public ShirtController(IRepository<Shirt> r) : base(r){}
+}
+
+[Route("/api/parking")]
+public class ParkingController : CRUDController<Parking> {
+    public ParkingController(IRepository<Parking> r) : base(r){}
+}
+
+[Route("/api/hotel")]
+public class HotelController : CRUDController<Hotel> {
+    public HotelController(IRepository<Hotel> r) : base(r){}
+}
+
+[Route("/api/pettycash")]
+public class PettyCashController : CRUDController<PettyCash> {
+    public PettyCashController(IRepository<PettyCash> r) : base(r){}
+}
+
+[Route("/api/radio")]
+public class RadioController : CRUDController<Radio> {
+    public RadioController(IRepository<Radio> r) : base(r){}
+}
+
+[Route("/api/golfcart")]
+public class GolfCartController : CRUDController<GolfCart> {
+    public GolfCartController(IRepository<GolfCart> r) : base(r){}
+}
+
+[Route("/api/catering")]
+public class CateringController : CRUDController<Catering> {
+    public CateringController(IRepository<Catering> r) : base(r){}
+    
 }

@@ -1,3 +1,4 @@
+
 export const LoginForm = () => 
     <form className="navbar-form navbar-right">
         <div className="form-group">
@@ -6,10 +7,12 @@ export const LoginForm = () =>
         <div className="form-group">
             <input type="password" placeholder="Password" className="form-control" />
         </div>
+        <a className="login-button" href="#">
         <button type="submit" className="btn btn-success">Sign in</button>
+        </a>
     </form>
 
-export const Nav = ({includeLogin}) => 
+export const Nav = () => 
     <nav className="navbar navbar-inverse navbar-fixed-top">
         <div className="container">
         <div className="navbar-header">
@@ -22,7 +25,6 @@ export const Nav = ({includeLogin}) =>
             <a className="navbar-brand" href="#">Project name</a>
         </div>
         <div id="navbar" className="navbar-collapse collapse">
-            {includeLogin ? <LoginForm /> : null}
         </div>
         </div>
     </nav>
@@ -36,31 +38,3 @@ export const Jumbotron = () =>
         </div>
     </div>
 
-export const HomeContents = () =>
-    <div className="container">
-        <div className="row">
-            <div className="col-md-4">
-                <h2>Heading</h2>
-                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                <p><a className="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-            </div>
-            
-            <div className="col-md-4">
-                <h2>Heading</h2>
-                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                <p><a className="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-            </div>
-
-            <div className="col-md-4">
-                <h2>Heading</h2>
-                <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-                <p><a className="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-            </div>
-        </div>
-
-        <hr />
-
-        <footer>
-        <p>&copy; 2016 Company, Inc.</p>
-        </footer>
-    </div>
