@@ -28,10 +28,10 @@ const post = (url, data) =>
     .catch(e => log(e))
     .then(r => r.json())
 // ----------------
-const Event = (event) =>
-    <a className="event" href={`#/status/${event.id}`}>
-        <h1>{event.name}</h1>
-        <p>{event.location}</p>
+const Advent = (advent) =>
+    <a className="advent" href={`#/status/${advent.id}`}>
+        <h1>{advent.name}</h1>
+        <p>{advent.location}</p>
     </a>
 
 const Error = () => <div>Page Not Found</div>
@@ -44,14 +44,14 @@ class Home extends Component {
         }
     }
     componentDidMount(){
-        get('api/event').then(events => {
-            events = events.reverse()
-            this.setState({items: events})
+        get('api/advent').then(advents => {
+            advents = advents.reverse()
+            this.setState({items: advents})
         }).catch(e => log(e))
     }
     render(){
         return <div className="grid grid-3-600">
-            {this.state.items.map(Event)}
+            {this.state.items.map(Advent)}
         <div>
         <a className="compose-event" href="#/compose">
             <button>Create New Event</button>
@@ -67,7 +67,7 @@ class EventPage extends Component {
         this.state = { id: props.params.id }
     }
     componentDidMount(){
-        get('/api/event/'+this.state.id).then(x => {
+        get('/api/advent/'+this.state.id).then(x => {
             this.setState({ item: x })
         })
     }
@@ -76,7 +76,7 @@ class EventPage extends Component {
         if(!item)
             return <div/>
 
-        return <div className="event">
+        return <div className="advent">
             <h5>{item.name}</h5>
             <hr/>
             <p>{item.location}</p>
@@ -99,9 +99,8 @@ class NewEvent extends Component {
     }
     submit(e){
         e.preventDefault()
-        post('/api/event', {
+        post('/api/advent', {
             name: this.refs.name.value,
-            location: this.refs.location.value,
             startDate: this.refs.startDate.value,
             endDate: this.refs.endDate.value
         }).then(x => {
@@ -125,7 +124,6 @@ class NewEvent extends Component {
 
         <div>
             <textarea ref="name" type="text" placeholder="Event Name" required></textarea>
-            <textarea ref="location" type="text" placeholder="Event Location" required></textarea>
             <textarea ref="startDate" type="DateTime" placeholder="Start Date DD/MM/YR" required></textarea>
             <textarea ref="endDate" type="DateTime" placeholder="End Date DD/MM/YR" required></textarea>
         </div>
@@ -145,7 +143,6 @@ class NewAdvance extends Component {
         e.preventDefault()
         post('/api/advance', {
             name: this.refs.name.value,
-            location: this.refs.location.value,
             startDate: this.refs.startDate.value,
             endDate: this.refs.endDate.value
         }).then(x => {
@@ -171,22 +168,17 @@ class NewAdvance extends Component {
             <p>
             In order to initialize your event advance, you'll need to provide details for the following categories:
             </p>
-        <div className="advance-category-button">
-            <button>Employees</button>
-            <button>Departments</button>
-            <button>Credentials</button>
-            <button>Staff Shirts</button>
-            <button>Parking</button>
-            <button>Hotel</button>
-            <button>Petty Cash</button>
-            <button>Radios</button>
-            <button>Golf Carts</button>
-            <button>Catering</button>
-            <button>Advance Details</button>
+        <div className="advance-section-form">
+        <div>
+            <textarea ref="name" type="text" placeholder="Event Name" required></textarea>
+            <textarea ref="startDate" type="DateTime" placeholder="Start Date DD/MM/YR" required></textarea>
+            <textarea ref="endDate" type="DateTime" placeholder="End Date DD/MM/YR" required></textarea>
+        </div>
+        
         </div>  
         </div>
         <div>
-                <button type="submit">Initialize Advance</button>
+                <button type="submit">Add Section</button>
             </div>
         </form>
     }
