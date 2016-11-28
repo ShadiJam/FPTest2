@@ -10,6 +10,18 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
+using System.Net.Http;
+
+public  class Location : HasId {
+    [Required]
+    public int Id { get; set; }
+    public string address { get; set; } = "woodbar";
+    
+    
+}
+
+
 
 public class Employee : HasId {
     [Required]
@@ -25,7 +37,6 @@ public class Employee : HasId {
     public static void createFullName(string FName, string LName){
         Func<string, string, string> FullName = (string fName, string lName) => fName +" "+lName;
     }
-   
     //create function that allows admin user to add employee
 }
 public class Advent : HasId {
@@ -60,7 +71,6 @@ public class Section : HasId {
     public Advance advance { get; set; }
     public string SectionName { get; set; }
     public string SectionDescription { get; set; }
-    public string Location { get; set; }
     public double Cost { get; set; }
     public IEnumerable<Category> Categories { get; set; }
     // create function that allows admin user to create section and include in a particular advance

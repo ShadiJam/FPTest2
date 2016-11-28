@@ -132,65 +132,7 @@ class NewEvent extends Component {
     }
 }
 
-class NewAdvance extends Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            items: []
-        }
-    }
-    componentDidMount(){
-        get('/api/advent').then(advent => {
-            advent = adventId()
-            this.setState({items: adventId})
-        }).catch(e => log(e))
-    }
-    submit(e){
-        e.preventDefault()
-        post('/api/advance', { //not sure how to associate this advance with the AdventId and the category with the advanceId
-            name: this.refs.name.value, 
-            location: this.refs.location.value,
-            startDate: this.refs.startDate.value,
-            endDate: this.refs.endDate.value
-        }).then(x => {
-            if(!x.errors) window.location.hash = `#/status/${x.id}`
 
-            this.setState({ errors: x.errors })
-        }).catch(e => alert(e))
-    }
-    render(){
-        var err
-        if(this.state.errors){
-            err = <ul className="compose-errors">
-                {this.state.errors.map(x => <li>{x}</li>)}
-                </ul>
-        }
-
-        return <form className="build-advance-form" onSubmit={e => this.submit(e)}>
-
-        {this.state.errors ? <p>There were errors with your Advance:</p> : null}
-        {err}
-
-        <div>
-            <p>
-            In order to initialize your event advance, you'll want to create sections for each part of your advance. Let's get started. 
-            </p>
-        <div>
-            <textarea ref="name" type="text" placeholder="Section Name" required></textarea>
-            <textarea ref="sectionDescription" type="text" placeholder="A Brief Description about this section - optional"></textarea>
-            <textarea ref="category" type="text" placeholder="If this section is for Staff Shirts, then your options might include Cost or Sizes" required></textarea>          
-            <button>Add Another Category</button>
-            <textarea ref="option" type="text" placeholder="This is where you would include options within a category, for example, the different shirt sizes available. This is not required"></textarea>
-            <button>Add Another Option</button>
-
-        </div>
-        </div>  
-        <div>
-                <button type="submit">Add Category</button>
-            </div>
-        </form>
-    }
-}
 const Layout = ({children}) => 
     <div>
         <div>
